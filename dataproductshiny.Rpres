@@ -1,0 +1,56 @@
+Searching for Diamonds using Shiny!
+========================================================
+author: ncapps
+date: 5/15/2017
+autosize: true
+font-import:http://fonts.googleapis.com/css?family=Space+Mono
+font-family:'Space Mono'
+
+
+Abstract
+========================================================
+
+Search for diamonds using the following variables:
+
+- Price
+- Carat (Weight)
+- Cut (Quality)
+- Color (Presence of color)
+- Clarity (Presence of inclusions)
+
+Summary of diamond dataset
+========================================================
+This dataset was sourced from the ggplot2 R package.
+
+```{r}
+library(ggplot2)
+summary(diamonds)
+```
+
+Price distribution of sample data
+========================================================
+
+```{r, echo=FALSE}
+hist(diamonds$price,
+     xlab="USD",
+     col="lightblue",
+     main="Diamond Price Distribution")
+```
+
+
+How it works
+========================================================
+The Shiny application leverages the dplyr package to select data based on user input
+
+```{r, eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE}
+df <- reactive({diamonds %>% filter(
+                        (price >= input$price[1]) &
+                        (price <= input$price[2]) &
+                        (carat >= input$carat[1]) &
+                        (carat <= input$carat[2]) &
+                        (cut %in% input$cut) &
+                        (color %in% input$color) & 
+                        (clarity %in% input$clarity)
+                        )})
+```
+Try the app live here <https://ncapps.shinyapps.io/dataproductshiny/>
